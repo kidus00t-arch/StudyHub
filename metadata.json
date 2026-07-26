@@ -1,0 +1,6 @@
+{
+  "name": "StudyHub",
+  "description": "An academic archive for lecture notes, past exams, and solved exercises.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
