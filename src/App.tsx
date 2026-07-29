@@ -42,8 +42,6 @@ import {
   recordDownload,
   submitRating,
 } from './studyhubService';
-import { button } from 'motion/react-m';
-
 // "2h ago" / "3d ago" style relative time from a created_at timestamp.
 function timeAgo(dateString: string): string {
   const seconds = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
