@@ -7,11 +7,17 @@ const env = (import.meta as any).env || {};
 const supabaseUrl = env.VITE_SUPABASE_URL as string | undefined;
 const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error(
-    "Supabase configuration error: Missing environment variables! " +
-    "Verify that your .env.local file contains VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY."
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+
+if (!isSupabaseConfigured) {
+  console.warn(
+    "Supabase configuration notice: Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY environment variables. " +
+    "Please configure them in your Netlify site environment settings."
   );
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+// Use valid placeholder values if env vars are missing to prevent top-level JS module crash (Invalid URL error)
+const urlToUse = (supabaseUrl && supabaseUrl.trim() !== '') ? supabaseUrl : 'https://placeholder.supabase.co';
+const keyToUse = (supabaseAnonKey && supabaseAnonKey.trim() !== '') ? supabaseAnonKey : 'placeholder-anon-key';
+
+export const supabase = createClient(urlToUse, keyToUse);
